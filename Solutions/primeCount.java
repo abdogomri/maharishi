@@ -16,22 +16,44 @@ public class primeCount{
 		System.out.println(result);
 	}
 
-	static int primeCount(int start, int end){
-		int primeCount = 0;
-		for(int number = start; number <= end; number++){
-			if(number > 1){	
-				boolean isPrime = true;
-				for(int divider = 2; divider * 2 <= number; divider++){
-					if(number % divider == 0){
-						isPrime = false;
-						break;
-					}
-				}
-				if(isPrime){
-					primeCount++;
-				}
-			}
-		}
-		return primeCount;
-	}
+	static int primeCount(int start, int end) {
+
+        int primeCount = 0;
+        if (start > end) {
+            return primeCount;
+        }
+
+        if (start < 0) {
+            if (end < 0) {
+                return 0;
+            } else {
+                start = 0;
+            }
+        }
+
+
+        for (int i = start; i <= end; i++) {
+            if (isPrime(i)) {
+                primeCount++;
+            }
+        }
+        return primeCount;
+    }
+
+    static boolean isPrime(int n) {
+        if (n == 0 || n == 1){
+            return false;
+        }
+        int primeRoot = (int) Math.sqrt(n);
+
+        if (primeRoot == Math.sqrt(n)){
+            return false;
+        }
+        for (int i = 2; i <= primeRoot; i++) {
+            if (n % i == 0) {
+                return false;
+            }
+        }
+        return true;
+    }
 }
