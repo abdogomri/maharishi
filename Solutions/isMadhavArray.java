@@ -15,54 +15,32 @@ public class isMadhavArray{
 		result = isMadhavArray(new int[]{3, 1, 2, 3, 0});
 		System.out.println(result);
 	}
+	
+	//this is a more simple method using some mathematics to test if the length of the array can be wrriten as n(n+1)/2
+	//and also by calculating the index of each alternation in the second for loop which is i*(i-1)/2
+	    static int isMadhavArray(int[] a){
+        double n = (Math.sqrt(8*a.length+1) - 1)/2;
+        int isMadhav = 1;
+        int isNotMadhav = 0;
+        if (n != (int)n){
+            return isNotMadhav;
+        }
+        int m = a[0];
 
-	static int isMadhavArray(int[] a){
-		int isMadhavArray = 0;
-		int arrayLength = a.length;
-		int startIndex = 0; // start index of current array elements under consideration
-		int endIndex = 0; // end index of current array elements under consideration
-		int n = 1; // track current length of array elements between start and end index
-		int currentSum = 0; // current sum of array elements
-		int sum = 0; // sum of elements of array between startIndex and endIndex
-		int currentLengthOfArray = 1; // length of array from index 0 to endIndex
-		int calculatedLengthOfArray = 1; // length calculating n * (n+1)/2
-		while(currentLengthOfArray <= arrayLength){
-			if(currentLengthOfArray == calculatedLengthOfArray){
-				for(int index = startIndex; index <= endIndex; index++){
-					sum += a[index];
-				}
-			}else{
-				// Fail ::: The length of a Madhav array must be n*(n+1)/2 for some n
-				isMadhavArray = 0;
-				break;
-			}
-			if((currentSum == sum) || (startIndex == endIndex)){ // startIndex == endIndex to satisfy initial condition
-				currentSum = sum;
-				sum = 0;
-				isMadhavArray = 1;
-			}else{
-				// Fail ::: The sum is not equal
-				isMadhavArray = 0;
-				break;
-			}
-			if(currentLengthOfArray == arrayLength){
-				// already at the end of the array
-				break;
-			}else{
-				startIndex = endIndex + 1;
-				endIndex = startIndex + n;
-				if((startIndex < arrayLength && endIndex < arrayLength)){
-					// operating inside the array bounderies
-					n++;
-				}else{
-					// adjusting boundries; so that lastIndex points last element of array
-					endIndex = arrayLength - 1;
-					n = endIndex - startIndex;
-				}
-				calculatedLengthOfArray = n * (n + 1)/2;
-				currentLengthOfArray = endIndex + 1;
-			}
-		}
-		return isMadhavArray;
-	}
+        for (int i = 2 ; i <= n ; i++){
+            int sum = 0;
+
+            for (int j=0;j<i;j++){
+                sum+=a[(i*(i-1)/2)+j];
+            }
+            if (sum != m){
+                return isNotMadhav;
+            }
+        }
+
+        return isMadhav;
+
+    }
+	
+
 }
