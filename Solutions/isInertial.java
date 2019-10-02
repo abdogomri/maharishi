@@ -19,49 +19,37 @@ public class isInertial{
 		result = isInertial(new int[]{2, 4, 6, 8, 10});
 		System.out.println(result);
 	}
+//much more simple method no need to creat new arrays
+    static int isInertial(int[] a){
+        int isInertial = 1;
+        int isNotInertial = 0;
 
-	static int isInertial(int[] a){
-		int isInertial = 0;
-		boolean containsOddValue = false;
-		int maxValue = Integer.MIN_VALUE;
-		int[] oddValues = new int[a.length];
-		int[] evenValues = new int[a.length];
-		int oddValuesIndex = 0;
-		int evenValuesIndex = 0;
-		for(int index = 0; index < a.length; index++){
-			if((a[index] % 2) != 0){
-				containsOddValue = true;
-				oddValues[oddValuesIndex] = a[index];
-				oddValuesIndex++;
-			}else{
-				evenValues[evenValuesIndex] = a[index];
-				evenValuesIndex++;
-			}
-			if(a[index] > maxValue){
-				maxValue = a[index];
-			}
-		}
-		if(containsOddValue){
-			if(maxValue % 2 == 0){
-				for(int oddIndex = 0; oddIndex < oddValuesIndex; oddIndex++){
-					for(int evenIndex = 0; evenIndex < evenValuesIndex; evenIndex++){
-						if(evenValues[evenIndex] != maxValue){
-							if(oddValues[oddIndex] > evenValues[evenIndex]){
-								isInertial = 1;
-							}else{
-								isInertial = 0;
-								break;
-							}
-						}else{
-							isInertial = 1;
-						}
-					}
-					if(isInertial == 0){
-						break;
-					}
-				}
-			}
-		}
-		return isInertial;
-	}
+        if (a.length<=1){
+            return isNotInertial;
+        }
+        int max = 0;
+        int numberOfOddNumbers = 0;
+
+        for (int i=0;i<a.length;i++){
+            if (a[i]>max){
+                max = a[i];
+            }
+        }
+
+        for (int i=0;i<a.length;i++){
+            if (a[i]%2!=0){
+                numberOfOddNumbers++;
+                for (int j=0;j<a.length;j++){
+                        if (a[j]!=max && a[j] > a[i]){
+                            return isNotInertial;
+                        }
+                }
+            }
+        }
+        if (max%2 != 0 || numberOfOddNumbers == 0){
+            return isNotInertial;
+        }
+
+        return isInertial;
+    }
 }
